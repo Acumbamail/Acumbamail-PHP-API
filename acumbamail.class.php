@@ -10,6 +10,77 @@ class AcumbamailAPI{
         $this->customer_id = $customer_id;
     }
 
+    /******* CAMPAIGNS *******/
+
+    public function createCampaign($name, $from_name, $from_email, $subject, $content, $lists){
+        $request = "createCampaign";
+
+        $list_array=array();
+
+        foreach ($lists as $key=>$value) {
+            $list_array['lists['.$key.']']=$value;
+        }
+
+        $data = array(
+            'name'        => $name,
+            'from_name'   => $from_name,
+            'from_email'  => $from_email,
+            'subject'     => $subject,
+            'content'     => $content,
+        );
+
+        $data=array_merge($data,$list_array);
+
+        return $this->callAPI($request, $data);
+    }
+
+    public function getCampaigns(){
+        $request = "getCampaigns";
+        return $this->callAPI($request);
+    }
+
+    public function getCampaignBasicInformation($campaign_id){
+        $request = "getCampaignBasicInformation";
+        $data = array(
+            'campaign_id' => $campaign_id
+        );
+        return $this->callAPI($request, $data);
+    }
+
+    public function getCampaignTotalInformation($campaign_id){
+        $request = "getCampaignTotalInformation";
+        $data = array(
+            'campaign_id' => $campaign_id
+        );
+        return $this->callAPI($request, $data);
+    }
+
+    public function getCampaignHTML($campaign_id){
+        $request = "getCampaignHTML";
+        $data = array(
+            'campaign_id' => $campaign_id
+        );
+        return $this->callAPI($request, $data);
+    }
+
+    public function getCampaignOpenersByCountries($campaign_id){
+        $request = "getCampaignOpenersByCountries";
+        $data = array(
+            'campaign_id' => $campaign_id
+        );
+        return $this->callAPI($request, $data);
+    }
+
+    public function getCampaignInformationByISP($campaign_id){
+        $request = "getCampaignInformationByISP";
+        $data = array(
+            'campaign_id' => $campaign_id
+        );
+        return $this->callAPI($request, $data);
+    }
+
+    /******* SUSCRIBERS *******/
+
     // createList($sender_email,$name,$company,$country,$city,$address,$phone)
     // Crea una nueva lista de suscriptores
     public function createList($sender_email,$name,$company,$country,$city,$address,$phone){
@@ -47,7 +118,7 @@ class AcumbamailAPI{
 
     // getSubscribers($list_id, $status)
     // Obtiene los suscriptores de una lista
-    public function getSubscribers($list_id, $status){
+    public function getSubscribers($list_id, $status = ""){
         $request = "getSubscribers";
         $data = array(
             'list_id' => $list_id,
@@ -60,26 +131,37 @@ class AcumbamailAPI{
     // Elimina un grupo de suscriptores de una lista
     public function batchDeleteSubscribers($list_id,$email_list){
         $request = "batchDeleteSubscribers";
+
+        $list_array=array();
+
+        foreach ($email_list as $key=>$value) {
+            $list_array['email_list['.$key.']']=$value;
+        }
+
         $data = array(
             'list_id' => $list_id,
-            'email_list' => $email_list,
         );
+
+        $data=array_merge($data,$list_array);
+
         return $this->callAPI($request, $data);
     }
 
-    // addMergeTag($list_id,$field_name)
+    // addMergeTag($list_id,$field_name, $field_type)
     // Elimina un suscriptor de una lista
-    public function addMergeTag($list_id,$field_name){
+    public function addMergeTag($list_id,$field_name,$field_type){
         $request = "addMergeTag";
         $data = array(
             'list_id' => $list_id,
             'field_name' => $field_name,
+	    'field_type' => $field_type,
         );
         return $this->callAPI($request, $data);
     }
 
     // addSubscriber($list_id,$merge_fields)
     // Agrega un suscriptor a una lista
+    // $merge_fields = array("mergefield_name" => "data",...)
     public function addSubscriber($list_id,$merge_fields){
         $request = "addSubscriber";
         $merge_fields_send=array();
@@ -134,7 +216,7 @@ class AcumbamailAPI{
     // callAPI($request, $data = array())
     // Realiza la llamada a la API de Acumbamail con los datos proporcionados
     function callAPI($request, $data = array()){
-        $url = "http://acumbamail.com/api/1/".$request.'/';
+        $url = "https://acumbamail.com/api/1/".$request.'/';
 
         $fields = array(
             'customer_id' => $this->customer_id,
@@ -151,17 +233,22 @@ class AcumbamailAPI{
             $postvars .= $key.'='.$value.'&';
         }
 
-        $ch = curl_init();
+	   $ch = curl_init();
 
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
         curl_setopt($ch,CURLOPT_POSTFIELDS, $postvars);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 
-        $response=json_decode(curl_exec($ch),true);
-        curl_close($ch);
+        $response = curl_exec($ch);
 
-        return $response;
+        $json = json_decode($response,true);
+
+        if(is_array($json)){
+            return $json;
+        }else{
+            return $response;
+        }
     }
 }
 ?>
