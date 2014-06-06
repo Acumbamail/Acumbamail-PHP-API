@@ -12,6 +12,20 @@ class AcumbamailAPI{
 
     /******* CAMPAIGNS *******/
 
+    /** createCampaign
+        Parameters:
+            name = Nombre de la campaña (no es público)
+            from_name = Nombre del remitente de la campaña
+            from_email = El email desde el que se enviará la campaña
+            subject = El asunto de la campaña
+            content = El HTML que contendrá la campaña
+            list = Los identificadores de las listas a las que se enviará la campaña
+        Example: createCampaign("Campaign Test", "John Doe", "john@doe.com", "Email Subject", "Email Content",
+                  array(
+                    '0' => '1000'
+                  ));
+    **/
+
     public function createCampaign($name, $from_name, $from_email, $subject, $content, $lists){
         $request = "createCampaign";
 
@@ -34,10 +48,22 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
+    /** getCampaigns
+        Example:
+            getCampaigns()
+    **/
+
     public function getCampaigns(){
         $request = "getCampaigns";
         return $this->callAPI($request);
     }
+
+    /** getCampaignBasicInformation
+        Parameters:
+            campaign_id = Identificador de la campaña de la que quieres obtener la información
+        Example:
+            getCampaignBasicInformation("1000")
+    **/
 
     public function getCampaignBasicInformation($campaign_id){
         $request = "getCampaignBasicInformation";
@@ -47,6 +73,13 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
+    /** getCampaignTotalInformation
+        Parameters:
+            campaign_id = Identificador de la campaña de la que quieres obtener la información
+        Example:
+            getCampaignTotalInformation("1000")
+    **/
+
     public function getCampaignTotalInformation($campaign_id){
         $request = "getCampaignTotalInformation";
         $data = array(
@@ -54,6 +87,13 @@ class AcumbamailAPI{
         );
         return $this->callAPI($request, $data);
     }
+
+    /** getCampaignHTML
+        Parameters:
+            campaign_id = Identificador de la campaña de la que quieres obtener la información
+        Example:
+            getCampaignHTML("1000")
+    **/
 
     public function getCampaignHTML($campaign_id){
         $request = "getCampaignHTML";
@@ -63,6 +103,13 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
+    /** getCampaignOpenersByCountries
+        Parameters:
+            campaign_id = Identificador de la campaña de la que quieres obtener la información
+        Example:
+            getCampaignOpenersByCountries("1000")
+    **/
+
     public function getCampaignOpenersByCountries($campaign_id){
         $request = "getCampaignOpenersByCountries";
         $data = array(
@@ -70,6 +117,13 @@ class AcumbamailAPI{
         );
         return $this->callAPI($request, $data);
     }
+
+    /** getCampaignInformationByISP
+        Parameters:
+            campaign_id = Identificador de la campaña de la que quieres obtener la información
+        Example:
+            getCampaignInformationByISP("1000")
+    **/
 
     public function getCampaignInformationByISP($campaign_id){
         $request = "getCampaignInformationByISP";
@@ -81,8 +135,19 @@ class AcumbamailAPI{
 
     /******* SUSCRIBERS *******/
 
-    // createList($sender_email,$name,$company,$country,$city,$address,$phone)
-    // Crea una nueva lista de suscriptores
+    /** createList
+        Parameters:
+            sender_email = El email que se utilizará para las notificaciones de la lista
+            name = Nombre de la lista
+            company = La empresa a la que pertenece la lista
+            country = El país de procedencia de la lista
+            city = La ciudad de la empresa
+            address = La dirección de la empresa
+            phone = El teléfono de la empresa
+        Example:
+            createList("john@doe.com", "John Doe", "MailServicios", "Spain", "Madrid", "Calle Falsa, 1", "91000000")
+    **/
+
     public function createList($sender_email,$name,$company,$country,$city,$address,$phone){
         $request = "createList";
         $data = array(
@@ -97,16 +162,27 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // deleteList($list_id)
-    // Borra una lista de suscriptores
+    /** deleteList
+        Parameters:
+            list_id = Identificador de la lista
+        Example:
+            deleteList("1000")
+    **/
+
     public function deleteList($list_id){
         $request = "deleteList";
         $data = array('list_id' => $list_id);
         return $this->callAPI($request, $data);
     }
 
-    // deleteSubscriber($list_id, $email)
-    // Elimina un suscriptor de una lista
+    /** deleteSubscriber
+        Parameters:
+            list_id = Identificador de la lista
+            email = Email del suscriptor
+        Example:
+            deleteSubscriber("1000", "john2@doe.com")
+    **/
+
     public function deleteSubscriber($list_id, $email){
         $request = "deleteSubscriber";
         $data = array(
@@ -116,8 +192,19 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // getSubscribers($list_id, $status)
-    // Obtiene los suscriptores de una lista
+    /** getSubscribers
+        Parameters:
+            list_id = Identificador de la lista
+            status = (Opcional) Segmenta los suscriptores por estado.
+                                0: suscriptores activos.
+                                1: suscriptores sin verificar.
+                                2: suscriptores que se han dado de baja.
+                                3: suscriptores hard bounced.
+                                4: suscriptores que se han quejado.
+        Example:
+            getSubscribers("1000", "0")
+    **/
+
     public function getSubscribers($list_id, $status = ""){
         $request = "getSubscribers";
         $data = array(
@@ -127,8 +214,14 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // batchDeleteSubscribers($list_id,$email_list)
-    // Elimina un grupo de suscriptores de una lista
+    /** batchDeleteSubscribers
+        Parameters:
+            list_id = Identificador de la lista
+            email_list = Diccionario de suscriptores
+        Example: batchDeleteSubscribers("1000", array(
+                                                    '0' => 'john2@doe.com'
+                                                ));
+    **/
     public function batchDeleteSubscribers($list_id,$email_list){
         $request = "batchDeleteSubscribers";
 
@@ -147,8 +240,14 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // addMergeTag($list_id,$field_name, $field_type)
-    // Elimina un suscriptor de una lista
+    /** addMergeTag
+        Parameters:
+            list_id = Identificador de la lista
+            field_name = El nombre la columna que se va a agregar a la lista
+            field_type = El tipo de la columna que se va a agregar a la lista
+        Example: addMergeTag("1000", "nombre", "char");
+    **/
+
     public function addMergeTag($list_id,$field_name,$field_type){
         $request = "addMergeTag";
         $data = array(
@@ -159,9 +258,16 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // addSubscriber($list_id,$merge_fields)
-    // Agrega un suscriptor a una lista
-    // $merge_fields = array("mergefield_name" => "data",...)
+    /** addSubscriber
+        Parameters:
+            list_id = Identificador de la lista
+            merge_fields = Diccionario que contenga los merge tags del suscriptor como claves y el valor que se quiere agregar al suscriptor
+        Example: addSubscriber("1000", array(
+                                            'email'  => 'pruebasuscriptor@gmail.com',
+                                            'nombre' => 'John'
+                                        ));
+    **/
+
     public function addSubscriber($list_id,$merge_fields){
         $request = "addSubscriber";
         $merge_fields_send=array();
@@ -179,8 +285,13 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // getSubscriberDetails($list_id,$subscriber)
-    // Obtiene datos avanzados de un suscriptor
+    /** getSubscriberDetails
+        Parameters:
+            list_id = Identificador de la lista
+            subscriber = Email del suscriptor
+        Example: addSubscriber("1000", "john2@doe.com");
+    **/
+
     public function getSubscriberDetails($list_id,$subscriber){
         $request = "getSubscriberDetails";
         $data = array(
@@ -190,27 +301,59 @@ class AcumbamailAPI{
         return $this->callAPI($request, $data);
     }
 
-    // getListStats($list_id)
-    // Obtiene datos generales sobre la lista
+    /** getListStats
+        Parameters:
+            list_id = Identificador de la lista
+        Example: getListStats("1000");
+    **/
+
     public function getListStats($list_id){
         $request = "getListStats";
         $data = array('list_id' => $list_id);
         return $this->callAPI($request, $data);
     }
 
-    // getLists()
-    // Obtiene las listas de suscriptores disponibles
+    /** getLists
+            Example: getLists();
+    **/
+
     public function getLists(){
         $request = "getLists";
         return $this->callAPI($request);
     }
 
-    // getFields($list_id)
-    // Obtiene los campos de la lista y el tipo que tienen
+    /** getFields
+            Parameters:
+                list_id = Identificador de la lista
+            Example: getFields("1000");
+    **/
+            
     public function getFields($list_id){
         $request = "getFields";
         $data = array('list_id' => $list_id);
         return $this->callAPI($request, $data);
+    }
+
+    /** batchAddSubscribers
+            Parameters:
+                list_id = Identificador de la lista
+                subscribers_data = Un array que contenga los mergetags del suscriptor como
+                                   claves y el valor que se quiere agregar al suscriptor.
+            Example: batchAddSubscribers("1000", array(
+                                                        array("email" => "john@doe.com"),
+                                                        array("email" => "john2@doe.com"),));
+    **/
+    public function batchAddSubscribers($list_id, $subscribers_data){
+        $request = "batchAddSubscribers";
+
+        $subscribers_data = json_encode($subscribers_data);
+
+        $data = array(
+            "list_id" => $list_id,
+            "subscribers_data" => $subscribers_data
+        );
+
+        $this->callAPI($request, $data);
     }
 
     // callAPI($request, $data = array())
@@ -233,7 +376,7 @@ class AcumbamailAPI{
             $postvars .= $key.'='.$value.'&';
         }
 
-	   $ch = curl_init();
+	    $ch = curl_init();
 
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
