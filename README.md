@@ -20,6 +20,10 @@ Usage / Uso
 
 Changelog
 --------------
+1.1
+
+* Añadidos todos los métodos de la API junto a ejemplos de uso.
+
 1.0
 
 * First Version / Primera versión

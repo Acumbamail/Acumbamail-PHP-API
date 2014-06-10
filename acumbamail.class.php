@@ -327,7 +327,7 @@ class AcumbamailAPI{
                 list_id = Identificador de la lista
             Example: getFields("1000");
     **/
-            
+
     public function getFields($list_id){
         $request = "getFields";
         $data = array('list_id' => $list_id);
@@ -373,7 +373,7 @@ class AcumbamailAPI{
 
         $postvars = '';
         foreach($fields as $key=>$value) {
-            $postvars .= $key.'='.$value.'&';
+            $postvars .= $key.'='.urlencode($value).'&';
         }
 
 	    $ch = curl_init();
