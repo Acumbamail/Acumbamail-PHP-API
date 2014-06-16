@@ -356,6 +356,22 @@ class AcumbamailAPI{
         $this->callAPI($request, $data);
     }
 
+    /** getCampaignOpeners
+            Parameters:
+                campaign_id = Identificador de la campaña de la que quieres obtener la información
+            Example: getCampaignOpeners(1000);
+    **/
+
+    public function getCampaignOpeners($campaign_id){
+        $request = "getCampaignOpeners";
+
+        $data = array(
+            "campaign_id" => $campaign_id,
+        );
+
+        $this->callAPI($request, $data);
+    }
+
     // callAPI($request, $data = array())
     // Realiza la llamada a la API de Acumbamail con los datos proporcionados
     function callAPI($request, $data = array()){
