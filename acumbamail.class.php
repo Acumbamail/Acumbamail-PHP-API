@@ -369,7 +369,7 @@ class AcumbamailAPI{
             "campaign_id" => $campaign_id,
         );
 
-        $this->callAPI($request, $data);
+        return $this->callAPI($request, $data);
     }
 
     // callAPI($request, $data = array())
