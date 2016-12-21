@@ -1,13 +1,17 @@
 <?php
 /* PHP Class for Acumbamail API */
 
-class AcumbamailAPI{
+class AcumbamailAPI {
     private $auth_token;
     private $customer_id;
 
     function __construct($customer_id, $auth_token){
         $this->auth_token = $auth_token;
         $this->customer_id = $customer_id;
+    }
+
+    public function setAuthToken($auth_token) {
+        $this->auth_token = $auth_token;
     }
 
     /******* CAMPAIGNS *******/
@@ -253,7 +257,7 @@ class AcumbamailAPI{
         $data = array(
             'list_id' => $list_id,
             'field_name' => $field_name,
-	    'field_type' => $field_type,
+            'field_type' => $field_type,
         );
         return $this->callAPI($request, $data);
     }
@@ -322,6 +326,28 @@ class AcumbamailAPI{
         return $this->callAPI($request);
     }
 
+    /** getForms
+        Parameters:
+            list_id = Identificador de la lista
+        Example: getForms("1000");
+    **/
+    public function getForms($list_id) {
+        $request = "getForms";
+        $data = array('list_id' => $list_id);
+        return $this->callAPI($request, $data);
+    }
+
+    /** getForms
+        Parameters:
+            form_id = Identificador del formulario
+        Example: getFormDetails("1000");
+    **/
+    public function getFormDetails($form_id) {
+        $request = "getFormDetails";
+        $data = array('form_id' => $form_id);
+        return $this->callAPI($request, $data);
+    }
+
     /** getFields
             Parameters:
                 list_id = Identificador de la lista
@@ -375,7 +401,7 @@ class AcumbamailAPI{
     // callAPI($request, $data = array())
     // Realiza la llamada a la API de Acumbamail con los datos proporcionados
     function callAPI($request, $data = array()){
-        $url = "https://acumbamail.com/api/1/".$request.'/';
+        $url = "http://sandbox.acumbamail.com/api/1/".$request.'/';
 
         $fields = array(
             'customer_id' => $this->customer_id,
@@ -387,20 +413,16 @@ class AcumbamailAPI{
             $fields=array_merge($fields,$data);
         }
 
-        $postvars = '';
-        foreach($fields as $key=>$value) {
-            $postvars .= $key.'='.urlencode($value).'&';
-        }
+        $postdata = http_build_query($fields);
 
-	    $ch = curl_init();
+        $opts = array('http' => array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoder',
+            'content' => $postdata));
 
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $postvars);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($ch);
-
+        $response = file_get_contents($url,
+                                      false,
+                                      stream_context_create($opts));
         $json = json_decode($response,true);
 
         if(is_array($json)){
