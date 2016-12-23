@@ -272,7 +272,7 @@ class AcumbamailAPI {
                                         ));
     **/
 
-    public function addSubscriber($list_id,$merge_fields){
+    public function addSubscriber($list_id,$merge_fields,$double_optin='',$welcome_email='') {
         $request = "addSubscriber";
         $merge_fields_send=array();
 
@@ -282,6 +282,8 @@ class AcumbamailAPI {
 
         $data = array(
             'list_id' => $list_id,
+            'double_optin' => $double_optin,
+	    'welcome_email' => $welcome_email,
         );
 
         $data=array_merge($data,$merge_fields_send);
@@ -395,6 +397,14 @@ class AcumbamailAPI {
             "campaign_id" => $campaign_id,
         );
 
+        return $this->callAPI($request, $data);
+    }
+
+        // getMergeFieldsWordPress($list_id)
+    // Obtiene los merge fields de la lista y el tipo que tienen
+    public function getMergeFieldsWordPress($list_id){
+        $request = "getMergeFieldsWordPress";
+        $data = array('list_id' => $list_id);
         return $this->callAPI($request, $data);
     }
 
