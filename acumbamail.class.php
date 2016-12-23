@@ -401,7 +401,7 @@ class AcumbamailAPI {
     // callAPI($request, $data = array())
     // Realiza la llamada a la API de Acumbamail con los datos proporcionados
     function callAPI($request, $data = array()){
-        $url = "http://sandbox.acumbamail.com/api/1/".$request.'/';
+        $url = "https://acumbamail.com/api/1/".$request.'/';
 
         $fields = array(
             'customer_id' => $this->customer_id,
