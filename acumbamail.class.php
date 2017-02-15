@@ -272,7 +272,7 @@ class AcumbamailAPI {
                                         ));
     **/
 
-    public function addSubscriber($list_id,$merge_fields,$double_optin='',$welcome_email='') {
+    public function addSubscriber($list_id,$merge_fields,$double_optin='',$welcome_email=''){
         $request = "addSubscriber";
         $merge_fields_send=array();
 
@@ -427,7 +427,7 @@ class AcumbamailAPI {
 
         $opts = array('http' => array(
             'method' => 'POST',
-            'header' => 'Content-type: application/x-www-form-urlencoder',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
             'content' => $postdata));
 
         $response = file_get_contents($url,
