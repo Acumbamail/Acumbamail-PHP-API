@@ -430,9 +430,9 @@ class AcumbamailAPI {
             'header' => 'Content-type: application/x-www-form-urlencoded',
             'content' => $postdata));
 
-        $response = file_get_contents($url,
-                                      false,
-                                      stream_context_create($opts));
+        $response = @file_get_contents($url,
+                                       false,
+                                       stream_context_create($opts));
         $json = json_decode($response,true);
 
         if(is_array($json)){
