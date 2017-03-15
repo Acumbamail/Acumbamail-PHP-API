@@ -408,6 +408,14 @@ class AcumbamailAPI {
         return $this->callAPI($request, $data);
     }
 
+    public function sendSMS($messages) {
+        $request = "sendSMS";
+        $data = array(
+            "messages" => $messages,
+        );
+        $this->callAPI($request, $data);
+    }
+
     // callAPI($request, $data = array())
     // Realiza la llamada a la API de Acumbamail con los datos proporcionados
     function callAPI($request, $data = array()){
