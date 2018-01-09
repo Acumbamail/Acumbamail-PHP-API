@@ -3,11 +3,9 @@
 
 class AcumbamailAPI {
     private $auth_token;
-    private $customer_id;
 
-    function __construct($customer_id, $auth_token){
+    function __construct($auth_token){
         $this->auth_token = $auth_token;
-        $this->customer_id = $customer_id;
     }
 
     public function setAuthToken($auth_token) {
@@ -422,7 +420,6 @@ class AcumbamailAPI {
         $url = "https://acumbamail.com/api/1/".$request.'/';
 
         $fields = array(
-            'customer_id' => $this->customer_id,
             'auth_token'=> $this->auth_token,
             'response_type' => 'json',
         );
