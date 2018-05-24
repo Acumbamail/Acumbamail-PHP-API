@@ -411,7 +411,22 @@ class AcumbamailAPI {
         $data = array(
             "messages" => $messages,
         );
-        $this->callAPI($request, $data);
+        return $this->callAPI($request, $data);
+    }
+
+    // Realiza el envío de un solo email con la informacion proporcionada
+    public function sendOne($from, $to, $body, $subject, $category='') {
+        $request = "sendOne";
+
+        $data = array(
+            "from_email" => $from,
+            "to_email" => $to,
+            "body" => $body,
+            "subject" => $subject,
+            "category" => $category
+        );
+
+        return $this->callAPI($request, $data);
     }
 
     // callAPI($request, $data = array())
