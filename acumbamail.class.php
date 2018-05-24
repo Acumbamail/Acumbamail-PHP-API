@@ -414,7 +414,15 @@ class AcumbamailAPI {
         return $this->callAPI($request, $data);
     }
 
-    // Realiza el envío de un solo email con la informacion proporcionada
+    /** sendOne
+            Parameters:
+                from = from email
+                to = to email
+                body = Cuerpo del email
+                subject = Asunto del email
+                category = Categoría
+            Example: sendOne('from@acumbamail.com', 'to@acumbamail.com', 'mensage', 'asunto')
+    **/
     public function sendOne($from, $to, $body, $subject, $category='') {
         $request = "sendOne";
 
