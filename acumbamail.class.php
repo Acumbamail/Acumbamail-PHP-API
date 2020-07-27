@@ -379,7 +379,7 @@ class AcumbamailAPI {
             "subscribers_data" => $subscribers_data
         );
 
-        $this->callAPI($request, $data);
+        return $this->callAPI($request, $data);
     }
 
     /** getCampaignOpeners
