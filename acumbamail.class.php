@@ -150,7 +150,7 @@ class AcumbamailAPI {
             createList("john@doe.com", "John Doe", "MailServicios", "Spain", "Madrid", "Calle Falsa, 1", "91000000")
     **/
 
-    public function createList($sender_email,$name,$company,$country,$city,$address,$phone){
+    public function createList($sender_email, $name, $company = false, $country = false, $city = false, $address = false, $phone = false){
         $request = "createList";
         $data = array(
             'sender_email' => $sender_email,
@@ -470,4 +470,3 @@ class AcumbamailAPI {
         }
     }
 }
-?>
