@@ -1,4 +1,7 @@
 <?php
+
+namespace AcumbamailPHP;
+
 /* PHP Class for Acumbamail API */
 
 class AcumbamailAPI {
