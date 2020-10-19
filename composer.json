@@ -4,5 +4,5 @@
     "require": {},
     "autoload": {
         "psr-4": {"AcumbamailPHP\\": "src"}
-    },
+    }
 }
