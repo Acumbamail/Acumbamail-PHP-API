@@ -1,8 +1,10 @@
 {
-    "name": "acumbamail/php-api",
+    "name": "acumbamail/acumbamail-php",
     "description": "PHP API implementing all methods from Acumbamail API",
     "require": {},
     "autoload": {
-        "psr-4": {"AcumbamailPHP\\": "src/"}
+        "psr-4": {
+            "Acumbamail\\AcumbamailPHP\\": "src/"
+        }
     }
 }

@@ -1,6 +1,5 @@
 <?php
-
-namespace AcumbamailPHP;
+namespace Acumbamail\AcumbamailPHP;
 
 /* PHP Class for Acumbamail API */
 
