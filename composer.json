@@ -1,0 +1,33 @@
+{
+  "name": "encreinformatique/acumbamail-php",
+  "description": "A PHP wrapper for the Acumbamail API",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "doctorsender",
+    "api"
+  ],
+  "authors": [
+    {
+      "name": "Julien",
+      "email": "julien@websetstudio.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "EncreInformatique\\AcumbamailApi\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "EncreInformatique\\AcumbamailApi\\Tests\\": "tests/"
+    }
+  }
+}

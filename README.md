@@ -6,20 +6,24 @@ Acumbamail PHP API
 Usage / Uso
 --------------
 
-###English
-- Include the class in your PHP file.
+### English
+- `composer require encreinformatique/acumbamail-php`
 - Make an object of the class
-    **$api = new AcumbamailAPI(authtoken);**
+    `$api = new \EncreInformatique\AcumbamailApi\AcumbamailAPI(authtoken);`
 - Use all the methods from the API
 
-###Spanish
+### Spanish
 - Incluye la clase en tu archivo PHP.
 - Crea un objeto de la clase
-    **$api = new AcumbamailAPI(authtoken);**
+    `$api = new \EncreInformatique\AcumbamailApi\AcumbamailAPI(authtoken);`
 - Usa todos los métodos de la API
 
 Changelog
 --------------
+2.0 - composer
+
+* new : primera versión con composer
+
 1.1
 
 * Añadidos todos los métodos de la API junto a ejemplos de uso.
